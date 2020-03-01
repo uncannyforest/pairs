@@ -71,6 +71,7 @@ button#delete {
 .footer {
   text-align: center;
   font-size: large;
+  margin: 20px;
 }
 
 .footer a {
