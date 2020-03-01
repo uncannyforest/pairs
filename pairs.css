@@ -3,7 +3,7 @@ body {
   background-color: #ffffff;
   font-family: sans-serif;
   letter-spacing: 1pt;
-  font-size: x-large;
+  font-size: xx-large;
 }
 
 .set-container {
@@ -28,7 +28,7 @@ input {
   flex: 1;
   border: 0px;
   border-radius: 4px;
-  font-size: x-large;
+  font-size: xx-large;
   margin: 10px;
   padding: 10px;
   letter-spacing: 1pt;
@@ -43,7 +43,7 @@ h2 {
 
 button {
   width: 100%;
-  font-size: x-large;
+  font-size: xx-large;
   padding: 10px;
   border-radius: 10px;
   letter-spacing: 1pt;
