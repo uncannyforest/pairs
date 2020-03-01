@@ -28,7 +28,7 @@ input {
   flex: 1;
   border: 0px;
   border-radius: 4px;
-  font-size: xx-large;
+  font-size: x-large;
   margin: 10px;
   padding: 10px;
   letter-spacing: 1pt;
@@ -42,6 +42,7 @@ h2 {
 }
 
 button {
+  min-width: 20px;
   width: 100%;
   font-size: xx-large;
   padding: 10px;
