@@ -6,16 +6,24 @@ import * as Printer from './modules/printer.js';
 
 // only stateful objects
 var pairsHistory = [];
-var numRows = 5;
+var numRows = 0;
+var sets;
 
 const setup = function() {
   let elem;
-  for (let i=0; i < 5; i++) {
-    elem = document.getElementById('seta' + i);
-    elem.onchange = getAndPrintSets;
-    elem = document.getElementById('setb' + i);
-    elem.onchange = getAndPrintSets;
+  sets = Cookies.getObj('sets') || new Input([], []);
+  for ( ; numRows < 5 || numRows < sets.setA.length || numRows < sets.setB.length ; numRows++) {
+    addRow();
+    if (numRows < sets.setA.length) {
+      elem = document.getElementById('seta' + numRows);
+      elem.value = sets.setA[numRows];
+    }
+    if (numRows < sets.setB.length) {
+      elem = document.getElementById('setb' + numRows);
+      elem.value = sets.setB[numRows];
+    }
   }
+
   elem = document.getElementById('generate');
   elem.onclick = generateFullyAndPrint;
 
@@ -50,7 +58,9 @@ const getSets = function() {
       setB.push(elem.value);
     }
   }
-  return new Input(setA, setB);
+  let sets = new Input(setA, setB);
+  Cookies.setObj('sets', sets);
+  return sets;
 }
 
 const generateFullyAndPrint = function() {
@@ -69,22 +79,27 @@ const updateHistory = function(output) {
   Cookies.setObj('history', pairsHistory);
 }
 
-const addRows = function() {
+const addRow = function() {
+  let elem;
   let buttonA = document.getElementById('add-rows-a');
   let buttonB = document.getElementById('add-rows-b');
+
+  buttonA.insertAdjacentHTML('beforeBegin',
+      `<div class="input-wrap"><input type="text" id="seta${numRows}"/></div>`);
+
+  buttonB.insertAdjacentHTML('beforeBegin',
+      `<div class="input-wrap"><input type="text" id="setb${numRows}"/></div>`);
+
+  elem = document.getElementById('seta' + numRows);
+  elem.onchange = getAndPrintSets;
+  elem = document.getElementById('setb' + numRows);
+  elem.onchange = getAndPrintSets;
+}
+
+const addRows = function() {
   let newNumRows = numRows + 5;
-  let elem;
   for ( ; numRows < newNumRows; numRows++) {
-    buttonA.insertAdjacentHTML('beforeBegin',
-        `<div class="input-wrap"><input type="text" id="seta${numRows}"/></div>`);
-
-    buttonB.insertAdjacentHTML('beforeBegin',
-        `<div class="input-wrap"><input type="text" id="setb${numRows}"/></div>`);
-
-    elem = document.getElementById('seta' + numRows);
-    elem.onchange = getAndPrintSets;
-    elem = document.getElementById('setb' + numRows);
-    elem.onchange = getAndPrintSets;
+    addRow();
   }
 };
 
