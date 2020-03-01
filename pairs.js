@@ -9,7 +9,7 @@ var pairsHistory = [];
 
 const setup = function() {
   let elem;
-  for (let i=0; i < 16; i++) {
+  for (let i=0; i < 5; i++) {
     elem = document.getElementById('seta' + i);
     elem.onchange = getAndPrintSets;
     elem = document.getElementById('setb' + i);
@@ -30,7 +30,7 @@ const getSets = function() {
   let setA = [];
   let setB = [];
   let elem;
-  for (let i=0; i < 16; i++) {
+  for (let i=0; i < 5; i++) {
     elem = document.getElementById('seta' + i);
     if (elem.value !== '') {
       setA.push(elem.value);
