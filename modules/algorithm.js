@@ -41,9 +41,11 @@ const makePairValidator = function(history) {
     for (let i = 0; i < history.length; i++) {
       let pairing = history[i].pairs;
       for (let j = 0; j < pairing.length; j++) {
-        if ((pairing[j][0] == itemA && pairing [j][1] == itemB) ||
-            (pairing[j][0] == itemB && pairing [j][1] == itemA)) {
-              return false;
+        if ((pairing[j][0].toLowerCase() === itemA.toLowerCase() &&
+             pairing [j][1].toLowerCase() === itemB.toLowerCase()) ||
+            (pairing[j][0].toLowerCase() === itemB.toLowerCase() &&
+             pairing [j][1].toLowerCase() === itemA.toLowerCase())) {
+          return false;
         }
       }
     }
