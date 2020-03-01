@@ -19,6 +19,9 @@ const setup = function() {
   elem = document.getElementById('generate');
   elem.onclick = generateFullyAndPrint;
 
+  elem = document.getElementById('delete');
+  elem.onclick = deleteLastFromHistory;
+
   elem = document.getElementById('add-rows-a');
   elem.onclick = addRows;
 
@@ -84,5 +87,17 @@ const addRows = function() {
     elem.onchange = getAndPrintSets;
   }
 };
+
+const deleteLastFromHistory = function() {
+  let confirmed = window.confirm('Delete last generated group of pairings from history?  This cannot be undone.');
+
+  if (confirmed) {
+    pairsHistory.pop();
+
+    Cookies.setObj('history', pairsHistory);
+
+    Printer.printHistory(pairsHistory);
+  }
+}
 
 document.addEventListener('DOMContentLoaded', setup);

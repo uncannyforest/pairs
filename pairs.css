@@ -52,6 +52,10 @@ button {
   color: #fff;
 }
 
+button#delete {
+  margin-top: 20px;
+  background-color: #c08040;
+}
 .text {
   width: 70%;
   margin: 0 auto;
