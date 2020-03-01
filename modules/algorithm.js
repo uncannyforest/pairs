@@ -1,3 +1,4 @@
+import Input from './input.js';
 import Output from './output.js';
 
 const pop = function(a, i) {
@@ -24,6 +25,28 @@ const getValidItemB = function(itemA, setB, validator) {
   }
   // give up
   return pop(setB, 0);
+};
+
+const sortByValidItemsB = function(itemA, setB, validator) {
+  itemA = itemA || '';
+  shuffleArray(setB);
+  let moreValid = [];
+  let lessValid = [];
+
+  for (let i = 0; i < setB.length; i++) {
+    if (validator(itemA, setB[i])) {
+      moreValid.push(setB[i]);
+    } else {
+      lessValid.push(setB[i]);
+    }
+  }
+
+  for (let i = 0; i < moreValid.length; i++) {
+    setB[i] = moreValid[i];
+  }
+  for (let i = 0; i < lessValid.length; i++) {
+    setB[i + moreValid.length] = lessValid[i];
+  }
 };
 
 /**
@@ -96,4 +119,56 @@ const generateFully = function(input, history) {
   return new Output(pairs, extra);
 };
 
-export { generateFully };
+/**
+ * @param {string[]} setA mutable set A
+ * @param {string[]} setB mutable set B
+ * @param {string[][]} history
+ * @return {Input}
+ */
+const prepNextPair = function(setA, setB, history) {
+  shuffleArray(setA);
+  sortByValidItemsB(setA[0], setB, makePairValidator(history));
+
+  return new Input(setA, setB);
+};
+
+/**
+ * Call this function with counter === 0, then counter === 1, until it returns an empty array.
+ * When it returns an empty array immediately call again with counter === 0.
+ * @param {Input} preppedInput output of prepNextPair
+ * @param {number} counter index to pair to check
+ * @return {string[]} the pair.  If empty, call again with counter == 0
+ */
+const getNextSinglePair = function(preppedInput, counter) {
+  if (counter < preppedInput.setB.length) {
+    return [preppedInput.setA[0], preppedInput.setB[counter]];
+  } else {
+    counter -= preppedInput.setB.length;
+  }
+
+  if (counter < preppedInput.setA.length - 1) {
+    return [preppedInput.setA[0], preppedInput.setA[counter + 1]];
+  } else {
+    return [];
+  }
+
+};
+
+/**
+ * @param {Input} preppedInput output of prepNextPair
+ * @param {number} counter index to pair to check
+ * @return {string[]} the pair
+ */
+const selectPair = function(preppedInput, counter) {
+  if (counter < preppedInput.setB.length) {
+    return [pop(preppedInput.setA, 0), pop(preppedInput.setB, counter)];
+  } else {
+    counter -= preppedInput.setB.length;
+  }
+
+  if (counter < preppedInput.setA.length - 1) {
+    return [pop(preppedInput.setA, 0), pop(preppedInput.setA, counter)]; // counter is not +1 because first was just popped!
+  }
+};
+
+export { generateFully, prepNextPair, getNextSinglePair, selectPair };

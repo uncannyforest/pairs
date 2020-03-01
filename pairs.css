@@ -35,6 +35,9 @@ input {
   letter-spacing: 1pt;
   min-width: 0px;
 }
+input:disabled {
+  color: #708090;
+}
 
 h2 {
   font-weight: normal;
@@ -54,14 +57,29 @@ button {
   color: #fff;
 }
 
+button:disabled {
+  background-color: #708090;
+}
+
 button#delete {
   margin-top: 20px;
   background-color: #c08040;
 }
+
+#curation button {
+  width: auto;
+  display: inline;
+}
+
 .text {
   width: 70%;
   margin: 0 auto;
   padding: 20px;
+}
+
+#curation {
+  width: 85%;
+  margin: 0 auto;
 }
 
 .history {
@@ -76,4 +94,9 @@ button#delete {
 
 .footer a {
   color: #b0c0d0;
+}
+
+#curation-text {
+  font-weight: bold;
+  display: inline-block;
 }

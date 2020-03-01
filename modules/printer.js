@@ -3,11 +3,15 @@ const printSets = function(input) {
   document.getElementById('ready-text').innerHTML = htmlReadyText;
 };
 
+const stringFromPair = function(pair) {
+   return pair.join(', ') + '<br />';
+}
+
 /**
  * @param{Output} output
  */
 const getHtmlForOutput = function(output) {
-  const reducer = (acc, curr) => acc + curr.join(', ') + '<br />';
+  const reducer = (acc, curr) => acc + stringFromPair(curr);
   let htmlOutputText = output.pairs.reduce(reducer, '');
   if (output.extra !== '') {
     htmlOutputText += `Extra (add to any pair): ${output.extra}<br />`;
@@ -22,6 +26,26 @@ const printOutput = function(output) {
   document.getElementById('output-text').innerHTML = getHtmlForOutput(output);
 };
 
+/**
+ */
+const resetOutput = function() {
+  document.getElementById('output-text').innerHTML = '';
+};
+
+/**
+ * @param{string[]} pair
+ */
+const addOutputPair = function(pair) {
+  document.getElementById('output-text').innerHTML += stringFromPair(pair);
+};
+
+/**
+ * @param{string[]} pair
+ */
+const printCuration = function(pair) {
+  document.getElementById('curation-text').innerHTML = stringFromPair(pair);
+};
+
 const printHistory = function(history) {
   if (history.length === 0) {
     document.getElementById('history-text').innerHTML = 'No previous history recorded in browser.';
@@ -34,4 +58,4 @@ const printHistory = function(history) {
   document.getElementById('history-text').innerHTML = htmlHistory;
 };
 
-export { printSets, printOutput, printHistory };
+export { printSets, printOutput, printHistory, resetOutput, addOutputPair, printCuration };
